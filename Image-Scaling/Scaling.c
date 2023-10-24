@@ -237,7 +237,7 @@ int main(int argc, char const *argv[])
             y1 = floor(y);
             y2 = ceil(y);
             if(x2 > H1 - 1) x2 = H1 - 1;
-            if(y2 > W1 - 1) x2 = W1 - 1;
+            if(y2 > W1 - 1) y2 = W1 - 1;
             dx = x - x1;
             dy = y - y1;
 
@@ -261,7 +261,7 @@ int main(int argc, char const *argv[])
             y1 = floor(y);
             y2 = ceil(y);
             if(x2 > H1 - 1) x2 = H1 - 1;
-            if(y2 > W1 - 1) x2 = W1 - 1;
+            if(y2 > W1 - 1) y2 = W1 - 1;
             dx = x - x1;
             dy = y - y1;
 
@@ -286,7 +286,7 @@ int main(int argc, char const *argv[])
             y1 = floor(y);
             y2 = ceil(y);
             if(x2 > H2 - 1) x2 = H2 - 1;
-            if(y2 > W2 - 1) x2 = W2 - 1;
+            if(y2 > W2 - 1) y2 = W2 - 1;
             dx = x - x1;
             dy = y - y1;
 
@@ -309,7 +309,7 @@ int main(int argc, char const *argv[])
             y1 = floor(y);
             y2 = ceil(y);
             if(x2 > H2 - 1) x2 = H2 - 1;
-            if(y2 > W2 - 1) x2 = W2 - 1;
+            if(y2 > W2 - 1) y2 = W2 - 1;
             dx = x - x1;
             dy = y - y1;
 
