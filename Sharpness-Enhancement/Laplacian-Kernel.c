@@ -10,8 +10,7 @@ int LaplacianSharpness1(YCbCr **image,int x, int y, int H, int W){
         return 0;
     }
     else{
-        int laplacian = 9 * image[x][y].Y - image[x-1][y-1].Y - image[x-1][y].Y - image[x-1][y+1].Y - image[x][y-1].Y - image[x][y+1].Y
-         - image[x+1][y-1].Y - image[x+1][y].Y - image[x+1][y+1].Y;
+        int laplacian = 5 * image[x][y].Y - image[x-1][y].Y - image[x+1][y].Y - image[x][y+1].Y - image[x][y-1].Y;
         return laplacian;
     }
     
@@ -24,11 +23,13 @@ int LaplacianSharpness2(YCbCr **image,int x, int y, int H, int W){
         return 0;
     }
     else{
-        int laplacian = 5 * image[x][y].Y - image[x-1][y].Y - image[x+1][y].Y - image[x][y+1].Y - image[x][y-1].Y;
+        int laplacian = 9 * image[x][y].Y - image[x-1][y-1].Y - image[x-1][y].Y - image[x-1][y+1].Y - image[x][y-1].Y - image[x][y+1].Y
+         - image[x+1][y-1].Y - image[x+1][y].Y - image[x+1][y+1].Y;
         return laplacian;
     }
     
 }
+
 int main(){
     FILE *fp;
 	fp = fopen("input.bmp", "rb");
