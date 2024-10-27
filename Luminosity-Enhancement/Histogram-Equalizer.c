@@ -3,9 +3,9 @@
 #include <string.h>
 #include "bmp_functions.h"
 
-int main(){
+int main(int argc, char *argv[]){
     FILE *fp;
-	fp = fopen("input.bmp", "rb");
+	fp = fopen(argv[1], "rb");
 
     // read bmp header
     bmp bmpheader;
@@ -23,41 +23,44 @@ int main(){
 
     // output data
     ImgRGB **output = RGB_2D(H, W);
+    YCbCr **output_YCbCr = YCbCr_2D(H, W);
+
+    // convert to YCbCr
+    YCbCr **data_YCbCr = YCbCr_2D(H, W);
+    RGBconvert(data_RGB, H, W, data_YCbCr);
 
     // construct histogram
-    double histR[256] = {0};
-    double histG[256] = {0};
-    double histB[256] = {0};
+    double hist[256] = {0};
     for(int i=0; i<H; i++){
         for(int j=0; j<W; j++){
-            histR[data_RGB[i][j].R] += 1;
-            histG[data_RGB[i][j].G] += 1;
-            histB[data_RGB[i][j].B] += 1;
+            int index = round(data_YCbCr[i][j].Y);
+            if(index > 255) index = 255;
+            hist[index] += 1;
         }
     }
     // turn to CDF
     int size = H*W;
     double sum=0;
     for(int i=1; i<256; i++){
-        histR[i] += histR[i-1];
-        histG[i] += histG[i-1];
-        histB[i] += histB[i-1];
+        hist[i] += hist[i-1];
     }
     for(int i=0; i<256; i++){
-        histR[i] /= size;
-        histG[i] /= size;
-        histB[i] /= size;
+        hist[i] /= size;
     }
 
     // Histogram Equalzier
     for(int i=0; i<H; i++){
         for(int j=0; j<W; j++){
-            output[i][j].R = 255*histR[data_RGB[i][j].R]; 
-            output[i][j].G = 255*histG[data_RGB[i][j].G]; 
-            output[i][j].B = 255*histB[data_RGB[i][j].B]; 
+            int index = round(data_YCbCr[i][j].Y);
+            if(index > 255) index = 255;
+            output_YCbCr[i][j].Y = 255*hist[index];
+            output_YCbCr[i][j].Cb = data_YCbCr[i][j].Cb;
+            output_YCbCr[i][j].Cr= data_YCbCr[i][j].Cr;
         }
     }
+    // Convert back to RGB
+    YCbCr_convert(output_YCbCr, output, H, W);
 
     // write data
-    writebmpRGB("output_HE.bmp", &bmpheader, output, skip);
+    writebmpRGB(argv[2], &bmpheader, output, skip);
 }

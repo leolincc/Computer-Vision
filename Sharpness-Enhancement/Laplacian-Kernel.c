@@ -30,9 +30,9 @@ int LaplacianSharpness2(YCbCr **image,int x, int y, int H, int W){
     
 }
 
-int main(){
+int main(int argc, char*argv[]){
     FILE *fp;
-	fp = fopen("input.bmp", "rb");
+	fp = fopen(argv[1], "rb");
 
     // read bmp header
     bmp bmpheader;
@@ -76,6 +76,6 @@ int main(){
     YCbCr_convert(data_YCbCr2, output2, H, W);
 
     // write data
-    writebmpRGB("output_SmallKernel.bmp", &bmpheader, output1, skip);
-    writebmpRGB("output_BigKernel.bmp", &bmpheader, output2, skip);
+    writebmpRGB(argv[2], &bmpheader, output1, skip);
+    writebmpRGB(argv[3], &bmpheader, output2, skip);
 }

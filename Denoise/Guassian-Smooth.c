@@ -47,6 +47,7 @@ int main(){
     writebmpRGB("output_GuassianKernel1.bmp", &bmpheader, output1, skip);
     writebmpRGB("output_GuassianKernel2.bmp", &bmpheader, output2, skip);
 }
+
 void conv2d(ImgRGB **image, int H, int W, ImgRGB **output, double kernel[][5]){
     for(int x=0; x<H; x++){
         for(int y=0; y<W; y++){
